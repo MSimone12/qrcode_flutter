@@ -5,7 +5,7 @@ class QrcodePlugin {
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      registrar.platformViewRegistry().registerViewFactory("plugins/qr_capture_view", QRCaptureViewFactory(registrar))
+      registrar.platformViewRegistry().registerViewFactory("plugins/qrcode_flutter_view", QRCaptureViewFactory(registrar))
     }
   }
 }

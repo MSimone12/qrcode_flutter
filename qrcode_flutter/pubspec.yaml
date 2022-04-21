@@ -1,10 +1,11 @@
-name: qrcode
-description: A flutter plugin for scanning QR codes. Use AVCaptureSession in iOS and zxing in Android.
-version: 1.0.5
-homepage: https://github.com/SiriDx/qrcode
+name: qrcode_flutter
+description: A new flutter plugin project.
+version: 1.0.0
+homepage:
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.16.2 <3.0.0"
+  flutter: ">=2.5.0"
 
 dependencies:
   flutter:
@@ -13,6 +14,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -20,17 +22,21 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   # This section identifies this Flutter project as a plugin project.
-  # The androidPackage and pluginClass identifiers should not ordinarily
+  # The 'pluginClass' and Android 'package' identifiers should not ordinarily
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: com.example.qrcode_flutter
-    pluginClass: QrcodePlugin
+    platforms:
+      android:
+        package: br.app.qrcode.qrcode_flutter
+        pluginClass: QrcodeFlutterPlugin
+      ios:
+        pluginClass: QrcodeFlutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

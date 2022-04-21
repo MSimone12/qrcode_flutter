@@ -3,22 +3,22 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-typedef CaptureCallback(String data);
+typedef CaptureCallback = Function(String data);
 
 enum CaptureTorchMode { on, off }
 
 class QRCaptureController {
-  MethodChannel _methodChannel;
-  CaptureCallback _capture;
+  MethodChannel? _methodChannel;
+  CaptureCallback? _capture;
 
   QRCaptureController();
 
   void _onPlatformViewCreated(int id) {
     _methodChannel = MethodChannel('plugins/qrcode_flutter/method_$id');
-    _methodChannel.setMethodCallHandler((MethodCall call) async {
+    _methodChannel!.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'onCaptured') {
-        if (_capture != null && call.arguments != null) {
-          _capture(call.arguments.toString());
+        if (call.arguments != null) {
+          _capture?.call(call.arguments.toString());
         }
       }
     });
@@ -44,7 +44,10 @@ class QRCaptureController {
 
 class QRCaptureView extends StatefulWidget {
   final QRCaptureController controller;
-  QRCaptureView({Key key, this.controller}) : super(key: key);
+  const QRCaptureView({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -58,7 +61,7 @@ class QRCaptureViewState extends State<QRCaptureView> {
     if (Platform.isIOS) {
       return UiKitView(
         viewType: 'plugins/qrcode_flutter_view',
-        creationParamsCodec: StandardMessageCodec(),
+        creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: (id) {
           widget.controller._onPlatformViewCreated(id);
         },
@@ -66,7 +69,7 @@ class QRCaptureViewState extends State<QRCaptureView> {
     } else {
       return AndroidView(
         viewType: 'plugins/qrcode_flutter_view',
-        creationParamsCodec: StandardMessageCodec(),
+        creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: (id) {
           widget.controller._onPlatformViewCreated(id);
         },
